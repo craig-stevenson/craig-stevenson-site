@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('work', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Base title="Work" description="Selected projects by Craig Stevenson.">
+  <h1 class="mb-8 text-2xl font-semibold tracking-tight">Work</h1>
+  {projects.length === 0 ? (
+    <p class="text-neutral-600 dark:text-neutral-400">No projects yet.</p>
+  ) : (
+    <ul class="space-y-6">
+      {projects.map((p) => (
+        <li>
+          <a href={`/work/${p.slug}`} class="group block">
+            <h2 class="font-medium group-hover:underline">{p.data.title}</h2>
+            <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">{p.data.description}</p>
+            <p class="mt-1 text-xs text-neutral-500">{p.data.role}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>

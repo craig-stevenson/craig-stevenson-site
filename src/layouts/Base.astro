@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Craig Stevenson — portfolio and writing.' } = Astro.props;
+const siteTitle = title === 'Craig Stevenson' ? title : `${title} — Craig Stevenson`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{siteTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <!--
+      Cloudflare Web Analytics — replace TOKEN once the site is deployed and
+      a beacon token is issued in the Cloudflare dashboard. Safe to leave
+      commented out until then.
+    -->
+    <!--
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+            data-cf-beacon='{"token": "TOKEN"}'></script>
+    -->
+  </head>
+  <body class="min-h-screen bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
+    <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-6 py-12">
+      <header class="mb-12 flex items-center justify-between">
+        <a href="/" class="font-semibold tracking-tight hover:underline">Craig Stevenson</a>
+        <nav class="flex gap-6 text-sm text-neutral-600 dark:text-neutral-400">
+          <a href="/work" class="hover:text-neutral-900 hover:underline dark:hover:text-neutral-100">Work</a>
+          <a href="/blog" class="hover:text-neutral-900 hover:underline dark:hover:text-neutral-100">Writing</a>
+        </nav>
+      </header>
+      <main class="flex-1">
+        <slot />
+      </main>
+      <footer class="mt-16 border-t border-neutral-200 pt-6 text-sm text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
+        © {new Date().getFullYear()} Craig Stevenson
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const projects = (await getCollection('work', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<Base title="Craig Stevenson">
+  <section class="mb-16">
+    <h1 class="text-3xl font-semibold tracking-tight">Hi, I'm Craig.</h1>
+    <p class="mt-4 text-lg text-neutral-700 dark:text-neutral-300">
+      I build software and write about it. This is where I keep notes on both.
+    </p>
+  </section>
+
+  {projects.length > 0 && (
+    <section class="mb-16">
+      <div class="mb-4 flex items-baseline justify-between">
+        <h2 class="text-sm font-medium uppercase tracking-wider text-neutral-500">Recent work</h2>
+        <a href="/work" class="text-sm text-neutral-600 hover:underline dark:text-neutral-400">All projects →</a>
+      </div>
+      <ul class="space-y-4">
+        {projects.map((p) => (
+          <li>
+            <a href={`/work/${p.slug}`} class="group block">
+              <h3 class="font-medium group-hover:underline">{p.data.title}</h3>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">{p.data.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {posts.length > 0 && (
+    <section>
+      <div class="mb-4 flex items-baseline justify-between">
+        <h2 class="text-sm font-medium uppercase tracking-wider text-neutral-500">Recent writing</h2>
+        <a href="/blog" class="text-sm text-neutral-600 hover:underline dark:text-neutral-400">All posts →</a>
+      </div>
+      <ul class="space-y-4">
+        {posts.map((post) => (
+          <li>
+            <a href={`/blog/${post.slug}`} class="group block">
+              <h3 class="font-medium group-hover:underline">{post.data.title}</h3>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">{post.data.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+</Base>

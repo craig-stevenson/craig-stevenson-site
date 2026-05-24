@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('work', ({ data }) => !data.draft);
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'work'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<Base title={project.data.title} description={project.data.description}>
+  <article class="prose prose-neutral max-w-none dark:prose-invert">
+    <header class="mb-8 not-prose">
+      <h1 class="text-3xl font-semibold tracking-tight">{project.data.title}</h1>
+      <p class="mt-2 text-sm text-neutral-500">{project.data.role}</p>
+      {(project.data.url || project.data.repo) && (
+        <div class="mt-3 flex gap-4 text-sm">
+          {project.data.url && (
+            <a href={project.data.url} class="text-neutral-700 underline hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100">
+              Live →
+            </a>
+          )}
+          {project.data.repo && (
+            <a href={project.data.repo} class="text-neutral-700 underline hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100">
+              Repo →
+            </a>
+          )}
+        </div>
+      )}
+    </header>
+    <Content />
+  </article>
+</Base>
