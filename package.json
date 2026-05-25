@@ -1,7 +1,7 @@
 {
   "name": "craig-stevenson-site",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "astro dev",
@@ -23,6 +23,7 @@
     "typescript": "^5.7.2"
   },
   "devDependencies": {
+    "@types/node": "^25.9.1",
     "wrangler": "^4.94.0"
   }
 }

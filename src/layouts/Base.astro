@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { commit, builtAt, version } from '../lib/build-info';
 
 interface Props {
   title: string;
@@ -22,6 +23,9 @@ const siteTitle = title === 'Craig Stevenson' ? title : `${title} — Craig Stev
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta name="build-version" content={version} />
+    <meta name="build-commit" content={commit} />
+    <meta name="build-time" content={builtAt} />
     <!--
       Cloudflare Web Analytics — replace TOKEN once the site is deployed and
       a beacon token is issued in the Cloudflare dashboard. Safe to leave
