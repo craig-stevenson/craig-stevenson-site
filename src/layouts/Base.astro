@@ -6,7 +6,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'Craig Stevenson — portfolio and writing.' } = Astro.props;
+const { title, description = 'Craig Stevenson — projects and articles.' } = Astro.props;
 const siteTitle = title === 'Craig Stevenson' ? title : `${title} — Craig Stevenson`;
 ---
 
@@ -37,15 +37,24 @@ const siteTitle = title === 'Craig Stevenson' ? title : `${title} — Craig Stev
       <header class="mb-12 flex items-center justify-between">
         <a href="/" class="font-semibold tracking-tight hover:underline">Craig Stevenson</a>
         <nav class="flex gap-6 text-sm text-neutral-600 dark:text-neutral-400">
-          <a href="/work" class="hover:text-neutral-900 hover:underline dark:hover:text-neutral-100">Work</a>
-          <a href="/blog" class="hover:text-neutral-900 hover:underline dark:hover:text-neutral-100">Writing</a>
+          <a href="/projects" class="hover:text-neutral-900 hover:underline dark:hover:text-neutral-100">Projects</a>
+          <a href="/articles" class="hover:text-neutral-900 hover:underline dark:hover:text-neutral-100">Articles</a>
+          <a href="/about" class="hover:text-neutral-900 hover:underline dark:hover:text-neutral-100">About</a>
         </nav>
       </header>
       <main class="flex-1">
         <slot />
       </main>
-      <footer class="mt-16 border-t border-neutral-200 pt-6 text-sm text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
-        © {new Date().getFullYear()} Craig Stevenson
+      <footer class="mt-16 flex flex-wrap items-center justify-between gap-2 border-t border-neutral-200 pt-6 text-sm text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
+        <p>© {new Date().getFullYear()} Craig Stevenson</p>
+        <ul class="flex gap-4">
+          <li>
+            <a href="https://github.com/craig-stevenson" class="hover:text-neutral-900 hover:underline dark:hover:text-neutral-100">GitHub</a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/craig-stevenson-hq/" class="hover:text-neutral-900 hover:underline dark:hover:text-neutral-100">LinkedIn</a>
+          </li>
+        </ul>
       </footer>
     </div>
   </body>

@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+
+<Base title="Articles" description="Articles by Craig Stevenson.">
+  <h1 class="mb-8 text-2xl font-semibold tracking-tight">Articles</h1>
+  {articles.length === 0 ? (
+    <p class="text-neutral-600 dark:text-neutral-400">No articles yet.</p>
+  ) : (
+    <ul class="space-y-6">
+      {articles.map((article) => (
+        <li>
+          <a href={`/articles/${article.slug}`} class="group block">
+            <h2 class="font-medium group-hover:underline">{article.data.title}</h2>
+            <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">{article.data.description}</p>
+            <time datetime={article.data.date.toISOString()} class="mt-1 block text-xs text-neutral-500">
+              {fmt(article.data.date)}
+            </time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>
